@@ -1,0 +1,70 @@
+<template>
+    <div class="slds-m-around_medium">
+
+        <div class="slds-m-bottom_small">
+            <lightning-input type="text"
+                             value={searchValue}
+                             placeholder="Enter keyword to search for Accounts and Contacts"
+                             onchange={searchKeyword}>
+            </lightning-input>
+        </div>
+
+        <lightning-button label="Search"
+                          onclick={handleSearchKeyword}
+                          variant="brand">
+        </lightning-button>
+
+        <div>{loadingText}</div>
+
+        <template if:true={showRecords}>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_small">
+                <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Record Name">Record Name</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Record Type">Record Type</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Click to open">Click to open</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Counter">Counter</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Click to Update Counter">Click to Update Counter</div>
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                    <template for:each={records} for:item="record">
+                        <tr class="slds-hint-parent" key={records.Id}>
+                            <td>
+                                <div class="slds-truncate">{record.name}</div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate">{record.type}</div>
+                            </td>
+                            <td>
+                                <button class="slds-button" onclick = {viewContactRecord} data-id = {record.recordId} data-type = {record.type}>
+                                    View
+                                </button>
+                            </td>
+                            <td>
+                                <div class="slds-truncate">{record.counter}</div>
+                            </td>
+                            <td>
+                                <button class="slds-button" onclick = {incCounter} data-id = {record.recordId} data-type = {record.type} data-counter={record.counter}>
+                                    Increment Counter
+                                </button>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </template>
+
+    </div>
+</template>
